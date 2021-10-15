@@ -316,6 +316,14 @@ class Rebuilder:
                     self.write(", ")
                 self._rebuild_internal(subnode)
             self.write(")")
+			
+        elif node.tag in ["ArrayExpressionAst"]:
+            subnodes = list(list(node)[0])
+            for i, subnode in enumerate(subnodes):
+                if i > 0:
+                    self.write(", ")
+                self._rebuild_internal(subnode)
+				
 
         elif node.tag in ["VariableExpressionAst"]:
             self.write("$" + node.attrib["VariablePath"])

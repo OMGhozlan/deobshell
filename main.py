@@ -55,6 +55,8 @@ def deob(ps1_file):
 
             r = Rebuilder(p.with_suffix(".deob.ps1"))
             r.rebuild(ast.getroot())
+    # print(o.stats.modifications, o.stats.ratio)
+    return o.stats.modifications, o.stats.ratio
 
 
 def format(ps1_file):

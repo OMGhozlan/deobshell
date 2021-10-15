@@ -70,6 +70,7 @@ class Optimizer:
     def __init__(self):
         self.stats = SimpleNamespace()
         setattr(self.stats, "modifications", 0)
+        setattr(self.stats, "ratio", 0.0)
 
     def optimize(self, ast):
 
@@ -83,6 +84,7 @@ class Optimizer:
 
         count_out = sum(1 for _ in ast.getroot().iter())
         ratio = "{:02.2f}".format(count_out / count_in * 100.00)
+        self.stats.ratio = float(ratio)
         log_debug(f"{count_out} nodes in output ({ratio}%)")
 
         return ast

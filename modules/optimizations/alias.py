@@ -1,5 +1,5 @@
 # coding=utf-8
-from modules.logger import log_debug
+from ..logger import log_debug
 
 ALIAS = {
     "%"     : "ForEach-Object",
@@ -151,7 +151,7 @@ ALIAS = {
 
 def opt_alias(ast):
     for node in ast.iter():
-        if node.tag in ["StringConstantExpressionAst"] and node.attrib["StringConstantType"] == "BareWord":
+        if node.tag in ["StringConstantExpressionAst"] and node.attrib["StringConstantType"] == "BareWord" and node.text:
             old_value = node.text
 
             new_value = ALIAS[old_value.lower()] if old_value.lower() in ALIAS else old_value

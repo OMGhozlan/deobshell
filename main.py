@@ -3,11 +3,11 @@ import os
 import pathlib
 import sys
 
-from modules.ast import create_ast_file, read_ast_file
-from modules.logger import set_log_level, LogLevel
-from modules.optimize import Optimizer
-from modules.rebuilder import Rebuilder
-from modules.utils import welcome
+from .modules.ast import create_ast_file, read_ast_file
+from .modules.logger import set_log_level, LogLevel
+from .modules.optimize import Optimizer
+from .modules.rebuilder import Rebuilder
+from .modules.utils import welcome
 
 OPTIONS = {}
 
@@ -40,7 +40,7 @@ def parse_args():
         i += 1
 
 
-def deob(ps1_file):
+def deob(ps1_file, encoding):
     p = pathlib.Path(ps1_file)
 
     if create_ast_file(p):
@@ -54,9 +54,9 @@ def deob(ps1_file):
                 ast.write(output)
 
             r = Rebuilder(p.with_suffix(".deob.ps1"))
-            r.rebuild(ast.getroot())
-    # print(o.stats.modifications, o.stats.ratio)
-    return o.stats.modifications, o.stats.ratio
+            r.rebuild(ast.getroot(), encoding)
+            return o.stats.modifications, o.stats.ratio
+    return -1, -1
 
 
 def format(ps1_file):

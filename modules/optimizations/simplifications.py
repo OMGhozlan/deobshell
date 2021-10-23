@@ -1,9 +1,9 @@
 # coding=utf-8
 
-from modules.barewords import BAREWORDS
-from modules.logger import log_debug
-from modules.special_vars import SPECIAL_VARS_NAMES
-from modules.utils import replace_node, create_constant_string, get_array_literal_values, create_array_literal_values, \
+from ..barewords import BAREWORDS
+from ..logger import log_debug
+from ..special_vars import SPECIAL_VARS_NAMES
+from ..utils import replace_node, create_constant_string, get_array_literal_values, create_array_literal_values, \
     get_used_vars
 
 
@@ -149,7 +149,7 @@ def opt_constant_string_type(ast):
 
 def opt_bareword_case(ast):
     for node in ast.iter():
-        if node.tag in ["StringConstantExpressionAst"] and node.attrib["StringConstantType"] == "BareWord":
+        if node.tag in ["StringConstantExpressionAst"] and node.attrib["StringConstantType"] == "BareWord" and node.text:
             old_value = node.text
 
             new_value = node.text
@@ -175,7 +175,7 @@ def opt_bareword_case(ast):
 
 def opt_prefixed_variable_case(ast):
     for node in ast.iter():
-        if node.tag == "StringConstantExpressionAst" and node.attrib["StringConstantType"] == "BareWord":
+        if node.tag == "StringConstantExpressionAst" and node.attrib["StringConstantType"] == "BareWord" and node.text:
             names = node.text.split(":")
             if len(names) > 1 and names[0].lower() in ["variable", "env"]:
                 old_name = node.text

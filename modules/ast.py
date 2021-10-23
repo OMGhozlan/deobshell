@@ -4,7 +4,7 @@ import subprocess
 # noinspection PyPep8Naming
 import xml.etree.ElementTree as ET
 
-from modules.logger import log_info, log_debug, log_err
+from .logger import log_info, log_debug, log_err
 
 
 def read_ast_file(filename):
@@ -24,9 +24,8 @@ def create_ast_file(ps1_file):
     log_info(f"Creating AST for: {ps1_file}")
 
     cmd = ["PowerShell", "-ExecutionPolicy", "Unrestricted", "-File",
-           os.path.abspath(os.path.join("tools", "Get-AST.ps1")),
+           os.path.abspath(os.path.join(os.path.dirname(__file__).replace("modules", "tools"), "Get-AST.ps1")),
            "-ps1", os.path.abspath(ps1_file)]
-
     result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
 
     for line in result.stdout.splitlines():

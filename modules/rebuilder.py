@@ -1,10 +1,10 @@
 # coding=utf-8
 from types import SimpleNamespace
 
-from modules.escaped_chars import escape_string
-from modules.logger import log_warn, log_err, log_info
-from modules.operators import OPS
-from modules.utils import parent_map
+from .escaped_chars import escape_string
+from .logger import log_warn, log_err, log_info
+from .operators import OPS
+from .utils import parent_map
 
 
 class Rebuilder:
@@ -41,6 +41,7 @@ class Rebuilder:
 
     def rebuild_operator(self, op):
         if op in OPS:
+            # print(op)
             self.write(OPS[op])
         else:
             log_err(f"Operator {op} not supported")
@@ -476,13 +477,13 @@ class Rebuilder:
         else:
             log_warn(f"NodeType: {node} unsupported")
 
-    def rebuild(self, node):
+    def rebuild(self, node, encoding):
         self.stats.nodes = 0
         self._parent_map = parent_map(node)
 
         log_info(f"Rebuilding script to: {self.output_filename}")
 
-        with open(self.output_filename, "w") as self.output:
+        with open(self.output_filename, "w", encoding=encoding) as self.output:
             self._rebuild_internal(node)
 
             log_info(f"{self.stats.nodes} nodes traversed")

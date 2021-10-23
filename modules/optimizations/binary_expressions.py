@@ -1,8 +1,8 @@
 # coding=utf-8
 from xml.etree.ElementTree import Element
 
-from modules.logger import log_debug, log_err
-from modules.utils import replace_node, get_array_literal_values, create_array_literal_values
+from ..logger import log_debug, log_err
+from ..utils import replace_node, get_array_literal_values, create_array_literal_values
 
 
 def opt_binary_expression_plus(ast):
@@ -60,32 +60,35 @@ def opt_binary_expression_plus(ast):
     return False
 
 
+# TODO: Revisit this
+
 def opt_binary_expression_replace(ast):
     for node in ast.iter():
-        if node.tag in ["BinaryExpressionAst"] and node.attrib["Operator"] == "Ireplace":
+        if node.tag in ["BinaryExpressionAst"] and node.attrib["Operator"] == "Ireplace" and node.text:
             target = node.find("StringConstantExpressionAst")
             if target is not None:
                 target = target.text
 
-            argument_values = get_array_literal_values(node.find("ArrayLiteralAst"))
-
-            if argument_values is None or len(argument_values) != 2:
-                return False
-
-            formatted = target.replace(argument_values[0], argument_values[1])
-
-            log_debug("Apply replace operator to '%s'" % formatted)
-
-            new_element = Element("StringConstantExpressionAst",
-                                  {
-                                      "StringConstantType": "SingleQuoted",
-                                      "StaticType"        : "string",
-                                  })
-            new_element.text = formatted
-
-            replace_node(ast, node, new_element)
-
-            return True
+                argument_values = get_array_literal_values(node.find("ArrayLiteralAst"))
+                # print(target, argument_values[0], argument_values[1])
+                
+                if argument_values is None or len(argument_values) != 2:
+                    return False
+                
+                formatted = target.replace(argument_values[0], argument_values[1])
+    
+                log_debug("Apply replace operator to '%s'" % formatted)
+    
+                new_element = Element("StringConstantExpressionAst",
+                                      {
+                                          "StringConstantType": "SingleQuoted",
+                                          "StaticType"        : "string",
+                                      })
+                new_element.text = formatted
+    
+                replace_node(ast, node, new_element)
+    
+                return True
     return False
 
 

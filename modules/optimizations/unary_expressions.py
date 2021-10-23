@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from modules.utils import create_constant_string
+from ..utils import create_constant_string
 
 
 def opt_unary_expression_join(ast):

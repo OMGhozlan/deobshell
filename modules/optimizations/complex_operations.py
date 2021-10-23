@@ -1,7 +1,7 @@
 # coding=utf-8
 
-from modules.logger import log_debug
-from modules.utils import replace_node, get_array_literal_values, create_array_literal_values
+from ..logger import log_debug
+from ..utils import replace_node, get_array_literal_values, create_array_literal_values
 
 
 def opt_value_of_const_array(ast):

@@ -1,6 +1,6 @@
 # coding=utf-8
-from modules.logger import log_debug
-from modules.utils import delete_node
+from ..logger import log_debug
+from ..utils import delete_node
 
 
 def opt_remove_empty_nodes(ast):

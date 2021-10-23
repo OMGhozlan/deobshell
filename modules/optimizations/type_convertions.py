@@ -1,9 +1,9 @@
 # coding=utf-8
 from xml.etree.ElementTree import Element
 
-from modules.logger import log_debug
-from modules.special_vars import SPECIAL_VARS_VALUES
-from modules.utils import replace_node, create_array_literal_values
+from ..logger import log_debug
+from ..special_vars import SPECIAL_VARS_VALUES
+from ..utils import replace_node, create_array_literal_values
 
 
 def opt_convert_type_to_type(ast):

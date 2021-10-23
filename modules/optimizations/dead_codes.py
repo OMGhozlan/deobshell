@@ -1,6 +1,6 @@
 # coding=utf-8
-from modules.logger import log_debug
-from modules.utils import parent_map, replace_node, is_prefixed_var, get_used_vars
+from ..logger import log_debug
+from ..utils import parent_map, replace_node, is_prefixed_var, get_used_vars
 
 
 def opt_unused_variable(ast):

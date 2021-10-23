@@ -3,9 +3,9 @@ import os
 import pathlib
 from xml.etree.ElementTree import Element
 
-from modules.ast import create_ast_file, read_ast_file
-from modules.logger import log_debug
-from modules.utils import replace_node, delete_node, create_array_literal_values
+from ..ast import create_ast_file, read_ast_file
+from ..logger import log_debug
+from ..utils import replace_node, delete_node, create_array_literal_values
 
 
 def opt_invoke_expression(ast):

@@ -23,7 +23,7 @@ def optimize_pass(ast):
     optimizations = [
         # Remove nodes
         opt_remove_empty_nodes,
-        opt_unused_variable,
+        # opt_unused_variable,
         opt_simplify_paren_single_expression,
         opt_simplify_pipeline_single_command,
         opt_simplify_single_array,

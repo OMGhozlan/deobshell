@@ -137,6 +137,12 @@ class Rebuilder:
             for subnode in node:
                 self._rebuild_internal(subnode)
 
+        elif node.tag in ["ThrowStatementAst"]:
+            self.write("Throw")
+            self.write(" ")
+            for subnode in node:
+                self._rebuild_internal(subnode)
+
         elif node.tag in ["CommandElements"]:
             for i, subnode in enumerate(node):
                 self._rebuild_internal(subnode)
@@ -149,7 +155,7 @@ class Rebuilder:
             for i, subnode in enumerate(subnodes):
                 self.indent()
                 self._rebuild_internal(subnode)
-                if subnode.tag not in ["IfStatementAst", "ForStatementAst", "TryStatementAst", "ForEachStatementAst", "PipelineAst"]:
+                if subnode.tag not in ["IfStatementAst", "ForStatementAst", "TryStatementAst", "ForEachStatementAst", "PipelineAst", "WhileStatementAst"]:
                     self.write(";\n")
                 elif subnode.tag in ["PipelineAst"]:
                     if self.lastWrite(subnode).tag not in ["ScriptBlockExpressionAst"]:
@@ -198,6 +204,17 @@ class Rebuilder:
             self.write(")\n")
 
             self._rebuild_internal(subnodes[2])
+
+        elif node.tag in ["WhileStatementAst"]:
+            self.write("\n")
+
+            subnodes = list(node)
+
+            self.indent()
+            self.write("While(")
+            self._rebuild_internal(subnodes[1])
+            self.write(")\n")
+            self._rebuild_internal(subnodes[0])
 
         elif node.tag in ["ForEachStatementAst"]:
             self.write("\n")

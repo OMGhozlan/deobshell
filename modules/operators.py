@@ -70,7 +70,7 @@ OPS = {
     "IsNot" : " -isnot ",
     "As" : " -as ",
     "PostfixPlusPlus": " ++ ",
-    "PostFixMinusMinus" : " -- ",
+    "PostfixMinusMinus" : " -- ",
     "Shl" : " -shl ",
     "Shr" : " -shr "
 }

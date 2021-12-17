@@ -39,7 +39,7 @@ class Rebuilder:
     def write(self, s):
         self.output.write(s)
 
-    def rebuild_operator(self, op):
+    def rebuild_operator(self, op):        
         if op in OPS:
             # print(op)
             self.write(OPS[op])
@@ -155,7 +155,7 @@ class Rebuilder:
             for i, subnode in enumerate(subnodes):
                 self.indent()
                 self._rebuild_internal(subnode)
-                if subnode.tag not in ["IfStatementAst", "ForStatementAst", "TryStatementAst", "ForEachStatementAst", "PipelineAst", "WhileStatementAst"]:
+                if subnode.tag not in ["IfStatementAst", "ForStatementAst", "TryStatementAst", "ForEachStatementAst", "PipelineAst", "WhileStatementAst", "SwitchStatementAst"]:
                     self.write(";\n")
                 elif subnode.tag in ["PipelineAst"]:
                     if self.lastWrite(subnode).tag not in ["ScriptBlockExpressionAst"]:
@@ -205,13 +205,24 @@ class Rebuilder:
 
             self._rebuild_internal(subnodes[2])
 
+        elif node.tag in ["SwitchStatementAst"]:
+            self.write("\n")
+            subnodes = list(node)
+            self.indent()
+            self.write("switch (")  
+            self._rebuild_internal(subnodes[-1])          
+            self.write(")\n")
+            for subnode in subnodes[:-1]:
+                self._rebuild_internal(subnode)
+            
+
         elif node.tag in ["WhileStatementAst"]:
             self.write("\n")
 
             subnodes = list(node)
 
             self.indent()
-            self.write("While(")
+            self.write("while(")
             self._rebuild_internal(subnodes[1])
             self.write(")\n")
             self._rebuild_internal(subnodes[0])
